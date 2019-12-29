@@ -3,6 +3,7 @@ package com.tal.alpha3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class LocationActivity extends FragmentActivity implements OnMapReadyCallback{
 
     Location mlocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -51,7 +52,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             public void onSuccess(Location location) {
                 if(location != null){
                     mlocation=location;
-                    Toast.makeText(getApplicationContext(),mlocation.getLatitude()+""+mlocation.getLongitude(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),mlocation.getLatitude()+" "+mlocation.getLongitude(),Toast.LENGTH_SHORT).show();
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
                     supportMapFragment.getMapAsync(LocationActivity.this);
                 }
