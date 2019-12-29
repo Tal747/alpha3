@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -78,9 +80,28 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public boolean onCreatePanelMenu(int featureId, Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreatePanelMenu(featureId, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent t;
+        if(id == R.id.menuUpdate){
+            t = new Intent(this,UpdateActivity.class);
+            startActivity(t);
+        }
+        if(id == R.id.menuGallery){
+            t = new Intent(this,GalleryActivity.class);
+            startActivity(t);
+        }
+        if(id == R.id.menuRegister){
+            t = new Intent(this,MainActivity.class);
+            startActivity(t);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void mapBTN(View view) {
