@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuRegister"
+        android:title="Register User"
+        android:orderInCategory="100"
+        />
+
+    <item
+        android:id="@+id/menuUpdate"
+        android:title="Update DB"
+        android:orderInCategory="200"
+        />
+
+
+    <item
+        android:id="@+id/menuGallery"
+        android:title="upload image"
+        android:orderInCategory="400"
+        />
+</menu>
