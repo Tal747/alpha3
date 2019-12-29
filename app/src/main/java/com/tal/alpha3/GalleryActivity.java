@@ -139,14 +139,18 @@ public class GalleryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String str = item.getTitle().toString();
+        int id = item.getItemId();
         Intent t;
-        if(str.equals("Register User")){
+        if(id == R.id.menuRegister){
             t = new Intent(this,MainActivity.class);
             startActivity(t);
         }
-        if(str.equals("Update DB")){
+        if(id == R.id.menuUpdate){
             t = new Intent(this,UpdateActivity.class);
+            startActivity(t);
+        }
+        if(id == R.id.menuLocation){
+            t = new Intent(this,LocationActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);

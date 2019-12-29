@@ -84,19 +84,23 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String str = item.getTitle().toString();
+        int id = item.getItemId();
         Intent t;
 
         if(strListener!=null){
             myRef.removeEventListener(strListener);
         }
 
-        if(str.equals("Register User")){
+        if(id == R.id.menuRegister){
             t = new Intent(this,MainActivity.class);
             startActivity(t);
         }
-        if(str.equals("upload image")){
+        if(id == R.id.menuGallery){
             t = new Intent(this,GalleryActivity.class);
+            startActivity(t);
+        }
+        if(id == R.id.menuLocation){
+            t = new Intent(this,LocationActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);

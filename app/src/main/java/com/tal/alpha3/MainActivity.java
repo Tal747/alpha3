@@ -77,14 +77,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String str = item.getTitle().toString();
+        int id = item.getItemId();
         Intent t;
-        if(str.equals("Update DB")){
+        if(id == R.id.menuUpdate){
             t = new Intent(this,UpdateActivity.class);
             startActivity(t);
         }
-        if(str.equals("upload image")){
+        if(id == R.id.menuGallery){
             t = new Intent(this,GalleryActivity.class);
+            startActivity(t);
+        }
+        if(id == R.id.menuLocation){
+            t = new Intent(this,LocationActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);
