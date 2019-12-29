@@ -30,7 +30,6 @@ import java.io.IOException;
 
 import static com.tal.alpha3.FBref.refImages;
 class FBref {
-    public static FirebaseAuth refAuth=FirebaseAuth.getInstance();
     public static FirebaseStorage FBST = FirebaseStorage.getInstance();
     public static StorageReference refStor=FBST.getReference();
     public static StorageReference refImages=refStor.child("Images");
