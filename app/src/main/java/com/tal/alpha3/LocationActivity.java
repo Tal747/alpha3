@@ -106,6 +106,5 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     public void mapBTN(View view) {
         GetLastLocation();
-
     }
 }
