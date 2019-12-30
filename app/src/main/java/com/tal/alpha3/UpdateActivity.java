@@ -44,26 +44,26 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_update);
 
 
-        et_plainText = (EditText)findViewById(R.id.et_plainText);
-        lv_database = (ListView)findViewById(R.id.lv_database);
+        et_plainText = (EditText) findViewById(R.id.et_plainText);
+        lv_database = (ListView) findViewById(R.id.lv_database);
 
         lv_database.setOnItemClickListener(this);
         lv_database.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,stringList);
+        adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, stringList);
         lv_database.setAdapter(adapter);
 
         strListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 stringList.clear();
-                for(DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+                for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
 
                     String value = childSnapShot.getValue(String.class);
 
                     stringList.add(value);
                 }
-                adapter = new ArrayAdapter<String>(UpdateActivity.this, R.layout.support_simple_spinner_dropdown_item,stringList);
+                adapter = new ArrayAdapter<String>(UpdateActivity.this, R.layout.support_simple_spinner_dropdown_item, stringList);
                 lv_database.setAdapter(adapter);
             }
 
@@ -87,35 +87,34 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         int id = item.getItemId();
         Intent t;
 
-        if(strListener!=null){
+        if (strListener != null) {
             myRef.removeEventListener(strListener);
         }
 
-        if(id == R.id.menuRegister){
-            t = new Intent(this,MainActivity.class);
+        if (id == R.id.menuRegister) {
+            t = new Intent(this, MainActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuGallery){
-            t = new Intent(this,GalleryActivity.class);
+        if (id == R.id.menuGallery) {
+            t = new Intent(this, GalleryActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuLocation){
-            t = new Intent(this,LocationActivity.class);
+        if (id == R.id.menuLocation) {
+            t = new Intent(this, MapsActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void AddTextToFB(View view) {
-        if(!validateForm()){
+        if (!validateForm()) {
             return;
         }
 
 
-        if(et_plainText.getText().toString().equals("/")){
+        if (et_plainText.getText().toString().equals("/")) {
             et_plainText.setError("Invalid Text.");
-        }
-        else {
+        } else {
             try {
                 String str = et_plainText.getText().toString();
                 myRef = database.getReference("Alpha").child(str);

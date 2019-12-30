@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/menuLocation"
-        android:title="Show Location"
+        android:title="Map"
         android:orderInCategory="400"
         />
 </menu>

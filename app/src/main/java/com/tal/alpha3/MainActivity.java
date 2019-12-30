@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
 
-    EditText et_email,et_phone;
+    EditText et_email, et_phone;
     private FirebaseAuth mAuth;
 
     @Override
@@ -34,19 +34,19 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        et_email = (EditText)findViewById(R.id.et_email);
-        et_phone = (EditText)findViewById(R.id.et_phone);
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_phone = (EditText) findViewById(R.id.et_phone);
 
     }
 
 
-    private void createAccount(String email,String password){
-        Log.d(TAG, "createAccount:"+email);
-        if(!validateForm()){
+    private void createAccount(String email, String password) {
+        Log.d(TAG, "createAccount:" + email);
+        if (!validateForm()) {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Authentication succeeded.",
                                     Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
 
     @Override
@@ -79,23 +77,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent t;
-        if(id == R.id.menuUpdate){
-            t = new Intent(this,UpdateActivity.class);
+        if (id == R.id.menuUpdate) {
+            t = new Intent(this, UpdateActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuGallery){
-            t = new Intent(this,GalleryActivity.class);
+        if (id == R.id.menuGallery) {
+            t = new Intent(this, GalleryActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuLocation){
-            t = new Intent(this,LocationActivity.class);
+        if (id == R.id.menuLocation) {
+            t = new Intent(this, MapsActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void RegisterAccount(View view) {
-        createAccount(et_email.getText().toString(),et_phone.getText().toString());
+        createAccount(et_email.getText().toString(), et_phone.getText().toString());
         et_phone.setText("");
         et_email.setText("");
     }

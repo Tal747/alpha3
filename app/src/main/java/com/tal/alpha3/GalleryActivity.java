@@ -150,7 +150,7 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(t);
         }
         if(id == R.id.menuLocation){
-            t = new Intent(this,LocationActivity.class);
+            t = new Intent(this,MapsActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);
