@@ -93,11 +93,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void mapBTN(View view) {
-        //Upload location to Firebase
+        //TODO: Upload location to Firebase
     }
 
     public void getLocationFromFirebase(View view) {
-        //Get location from Firebase
+        //TODO: Get location from Firebase
     }
 
     @Override
