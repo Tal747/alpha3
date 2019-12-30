@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -94,10 +95,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void mapBTN(View view) {
         //TODO: Upload location to Firebase
+        Toast.makeText(this, "Feature not yet available", Toast.LENGTH_LONG).show();
     }
 
     public void getLocationFromFirebase(View view) {
         //TODO: Get location from Firebase
+        Toast.makeText(this, "Feature not yet available", Toast.LENGTH_LONG).show();
     }
 
     @Override
