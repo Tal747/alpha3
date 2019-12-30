@@ -30,38 +30,37 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="2"
             android:ems="10"
-            android:layout_weight="5"
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            />
+            android:layout_weight="0.5" />
 
         <EditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:ems="10"
-            android:layout_weight="5"
+            android:layout_weight="2"
             android:hint="Phone Number"
             android:inputType="phone" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_weight="0.5" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
-            android:textSize="18dp"
+            android:layout_weight="1.5"
             android:onClick="RegisterAccount"
-            android:text="Register" />
+            android:text="Register"
+            android:textSize="18dp" />
 
         <Space
             android:layout_width="match_parent"
