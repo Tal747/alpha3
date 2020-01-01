@@ -1,12 +1,11 @@
 package com.tal.alpha3;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,9 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener, CompoundButton.OnCheckedChangeListener {
-
-    private Activity activityReference;
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener, CompoundButton.OnCheckedChangeListener {
 
     private GoogleMap mMap;
     private static final int requestCode = 101;
@@ -60,8 +57,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-        activityReference = this;
 
         switch1 = (Switch) findViewById(R.id.switch1);
 
@@ -203,11 +198,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(latLng)
                     .title("" + i));
         }
-        Toast.makeText(activityReference, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
     }
 
     public void clearMap(View view) {
         mMap.clear();
+        Toast.makeText(this, "Map cleared.", Toast.LENGTH_LONG).show();
     }
 
     @Override
