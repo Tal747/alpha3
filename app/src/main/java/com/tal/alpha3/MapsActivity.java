@@ -87,7 +87,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         };
         myRef.addValueEventListener(locListener);
