@@ -54,7 +54,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ValueEventListener locListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //TODO: Fix "Center" switch disappearing.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
