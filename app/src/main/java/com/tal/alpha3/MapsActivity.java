@@ -77,15 +77,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 locationList.clear();
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot locationSnapshot : childSnapshot.getChildren()) {
-                        if (locationSnapshot.getKey().equals("latitude"))
-                            lat = (double) locationSnapshot.getValue();
-                        else if (locationSnapshot.getKey().equals("longitude"))
-                            lng = (double) locationSnapshot.getValue();
-                        newLocation = new LatLng(lat, lng);
-                        locationList.add(newLocation);
-                    }
+                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
+                    lat = (double) locationSnapshot.child("latitude").getValue();
+                    lng = (double) locationSnapshot.child("longitude").getValue();
+                    newLocation = new LatLng(lat, lng);
+                    locationList.add(newLocation);
                 }
             }
 
@@ -195,7 +191,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void getLocationFromFirebase(View view) {
         mMap.clear();
-        for (int i = 1; i < locationList.size(); i++) {
+        for (int i = 0; i < locationList.size(); i++) {
             LatLng latLng = locationList.get(i);
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
