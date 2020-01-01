@@ -82,20 +82,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 locationList.clear();
-                try {
-                    for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
-                        for (DataSnapshot locationSnapShot : childSnapShot.getChildren()) {
-                            if (locationSnapShot.getKey().equals("latitude"))
-                                lat = (double) locationSnapShot.getValue();
-                            else if (locationSnapShot.getKey().equals("longitude"))
-                                lng = (double) locationSnapShot.getValue();
-                            newLocation = new LatLng(lat, lng);
-                            locationList.add(newLocation);
-                        }
+                for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot locationSnapShot : childSnapShot.getChildren()) {
+                        if (locationSnapShot.getKey().equals("latitude"))
+                            lat = (double) locationSnapShot.getValue();
+                        else if (locationSnapShot.getKey().equals("longitude"))
+                            lng = (double) locationSnapShot.getValue();
+                        newLocation = new LatLng(lat, lng);
+                        locationList.add(newLocation);
                     }
-                    Toast.makeText(activityReference, "Successfully retrieved locations from Firebase.", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(activityReference, "Failed to get location from Firebase.", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -208,6 +203,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(latLng)
                     .title("" + i));
         }
+        Toast.makeText(activityReference, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
+    }
+
+    public void clearMap(View view) {
+        mMap.clear();
     }
 
     @Override
