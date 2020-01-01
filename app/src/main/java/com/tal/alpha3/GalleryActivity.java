@@ -29,24 +29,25 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.tal.alpha3.FBref.refImages;
+
 class FBref {
     public static FirebaseStorage FBST = FirebaseStorage.getInstance();
-    public static StorageReference refStor=FBST.getReference();
-    public static StorageReference refImages=refStor.child("Images");
+    public static StorageReference refStor = FBST.getReference();
+    public static StorageReference refImages = refStor.child("Images");
 }
 
 public class GalleryActivity extends AppCompatActivity {
 
     ImageView iV;
 
-    int Gallery=1;
+    int Gallery = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        iV=(ImageView)findViewById(R.id.iV);
+        iV = (ImageView) findViewById(R.id.iV);
     }
 
     /**
@@ -65,9 +66,9 @@ public class GalleryActivity extends AppCompatActivity {
      * Uploading selected image file to Firebase Storage
      * <p>
      *
-     * @param requestCode   The call sign of the intent that requested the result
-     * @param resultCode    A code that symbols the status of the result of the activity
-     * @param data          The data returned
+     * @param requestCode The call sign of the intent that requested the result
+     * @param resultCode  A code that symbols the status of the result of the activity
+     * @param data        The data returned
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -77,7 +78,7 @@ public class GalleryActivity extends AppCompatActivity {
             if (requestCode == Gallery) {
                 Uri file = data.getData();
                 if (file != null) {
-                    final ProgressDialog pd=ProgressDialog.show(this,"Upload image","Uploading...",true);
+                    final ProgressDialog pd = ProgressDialog.show(this, "Upload image", "Uploading...", true);
                     StorageReference refImg = refImages.child("aaa.jpg");
                     refImg.putFile(file)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -108,11 +109,11 @@ public class GalleryActivity extends AppCompatActivity {
      * @param view
      */
     public void download(View view) throws IOException {
-        final ProgressDialog pd=ProgressDialog.show(this,"Image download","downloading...",true);
+        final ProgressDialog pd = ProgressDialog.show(this, "Image download", "downloading...", true);
 
         StorageReference refImg = refImages.child("aaa.jpg");
 
-        final File localFile = File.createTempFile("aaa","jpg");
+        final File localFile = File.createTempFile("aaa", "jpg");
         refImg.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -132,7 +133,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -141,16 +142,16 @@ public class GalleryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent t;
-        if(id == R.id.menuRegister){
-            t = new Intent(this,MainActivity.class);
+        if (id == R.id.menuRegister) {
+            t = new Intent(this, MainActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuUpdate){
-            t = new Intent(this,UpdateActivity.class);
+        if (id == R.id.menuUpdate) {
+            t = new Intent(this, UpdateActivity.class);
             startActivity(t);
         }
-        if(id == R.id.menuLocation){
-            t = new Intent(this,MapsActivity.class);
+        if (id == R.id.menuLocation) {
+            t = new Intent(this, MapsActivity.class);
             startActivity(t);
         }
         return super.onOptionsItemSelected(item);

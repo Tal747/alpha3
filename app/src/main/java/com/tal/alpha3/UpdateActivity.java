@@ -33,7 +33,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Alpha");
+    DatabaseReference myRef = database.getReference("Text");
     ValueEventListener strListener;
 
     AlertDialog.Builder adb;
@@ -117,7 +117,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         } else {
             try {
                 String str = et_plainText.getText().toString();
-                myRef = database.getReference("Alpha").child(str);
+                myRef = database.getReference("Text").child(str);
                 myRef.setValue(str);
                 Toast.makeText(this, "Writing succeeded.", Toast.LENGTH_SHORT).show();
             } catch (Exception exception) {
