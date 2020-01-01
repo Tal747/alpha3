@@ -77,12 +77,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 locationList.clear();
-                for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot locationSnapShot : childSnapShot.getChildren()) {
-                        if (locationSnapShot.getKey().equals("latitude"))
-                            lat = (double) locationSnapShot.getValue();
-                        else if (locationSnapShot.getKey().equals("longitude"))
-                            lng = (double) locationSnapShot.getValue();
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot locationSnapshot : childSnapshot.getChildren()) {
+                        if (locationSnapshot.getKey().equals("latitude"))
+                            lat = (double) locationSnapshot.getValue();
+                        else if (locationSnapshot.getKey().equals("longitude"))
+                            lng = (double) locationSnapshot.getValue();
                         newLocation = new LatLng(lat, lng);
                         locationList.add(newLocation);
                     }
@@ -171,17 +171,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LatLng myLatLng = null;
+        String myLocationTime = null;
 
         if (myLocation == null) {
             Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
             String provider = lm.getBestProvider(criteria, true);
             myLocation = lm.getLastKnownLocation(provider);
+        } else {
+            myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            myLocationTime = "" + myLocation.getTime();
         }
 
-        LatLng myLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-
-        String myLocationTime = "" + myLocation.getTime();
         try {
             myRef = database.getReference("Location").child(myLocationTime);
             myRef.setValue(myLatLng);
@@ -192,7 +194,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getLocationFromFirebase(View view) {
-        for (int i = 0; i < locationList.size(); i++) {
+        mMap.clear();
+        for (int i = 1; i < locationList.size(); i++) {
             LatLng latLng = locationList.get(i);
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
