@@ -46,7 +46,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Location myLocation;
     LatLng newLocation;
     ArrayList<LatLng> locationList = new ArrayList<>();
-    ArrayList<Long> locationTimeList = new ArrayList<>();
+    ArrayList<String> locationTimeList = new ArrayList<>();
+    int listID;
     double lat, lng;
 
     Switch switch1;
@@ -88,7 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     lng = (double) locationSnapshot.child("longitude").getValue();
                     newLocation = new LatLng(lat, lng);
                     locationList.add(newLocation);
-                    locationTimeList.add((Long) locationSnapshot.getValue());
+                    locationTimeList.add(locationSnapshot.getValue().toString());
                 }
             }
 
@@ -102,6 +103,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
         centerToCurrentLocation();
     }
 
@@ -197,12 +199,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void getLocationFromFirebase(View view) {
         mMap.clear();
-        for (int i = 0; i < locationList.size(); i++) {
-            LatLng latLng = locationList.get(i);
+        for (listID = 0; listID < locationList.size(); listID++) {
+            LatLng latLng = locationList.get(listID);
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title("" + i))
-                    .setTag(locationTimeList.get(i));
+                    .title("" + listID))
+                    .setTag(locationTimeList.get(listID));
         }
         Toast.makeText(this, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
     }
@@ -211,9 +213,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onMarkerClick(Marker marker) {
         markerTag = marker.getTag().toString();
 
-        adb = new androidx.appcompat.app.AlertDialog.Builder(this);
+        adb = new AlertDialog.Builder(this);
         adb.setTitle("Confirm deleting location from Firebase");
-        adb.setMessage("Please confirm deleting location from the database:");
+        adb.setMessage("Please confirm deleting location #" + listID + " from the database:");
         adb.setCancelable(false);
         adb.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
@@ -235,7 +237,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        androidx.appcompat.app.AlertDialog ad = adb.create();
+        AlertDialog ad = adb.create();
         ad.show();
         return false;
     }
