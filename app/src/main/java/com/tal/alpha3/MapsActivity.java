@@ -89,7 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     lng = (double) locationSnapshot.child("longitude").getValue();
                     newLocation = new LatLng(lat, lng);
                     locationList.add(newLocation);
-                    locationTimeList.add(locationSnapshot.getValue().toString());
+                    locationTimeList.add(locationSnapshot.getKey());
                 }
             }
 
@@ -220,11 +220,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         adb.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                try {
+                    myRef = database.getReference("Location").child(markerTag);
+                    myRef.removeValue();
 
-                myRef = database.getReference("Location").child(markerTag);
-                myRef.removeValue();
+                    Toast.makeText(MapsActivity.this, "Deleting succeeded.", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MapsActivity.this, "Deleting failed.", Toast.LENGTH_SHORT).show();
+                }
 
-                Toast.makeText(MapsActivity.this, "Deleting succeeded.", Toast.LENGTH_SHORT).show();
 
                 dialog.dismiss();
             }
