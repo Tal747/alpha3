@@ -215,7 +215,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         adb = new AlertDialog.Builder(this);
         adb.setTitle("Confirm deleting location from Firebase");
-        adb.setMessage("Please confirm deleting location #" + listID + " from the database:");
+        adb.setMessage("Please confirm deleting location #" + (listID - 1) + " from the database:");
         adb.setCancelable(false);
         adb.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
