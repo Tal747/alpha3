@@ -3,7 +3,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="center">Center</string>
     <string name="center_description">Center map to current location.</string>
-    <string name="btn_get">Get Location from Firebase</string>
+    <string name="btn_update">Update map</string>
     <string name="btn_upload">Upload Location to Firebase</string>
     <string name="btn_clear">Clear map</string>
 </resources>

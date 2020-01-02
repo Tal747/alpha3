@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener, CompoundButton.OnCheckedChangeListener, GoogleMap.OnMarkerClickListener {
 
@@ -51,6 +53,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     double lat, lng;
 
     Switch switch1;
+    Button btn_get;
 
     AlertDialog.Builder adb;
     String markerTag;
@@ -65,6 +68,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
 
         switch1 = (Switch) findViewById(R.id.switch1);
+        btn_get = (Button) findViewById(R.id.btnGet);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -90,6 +94,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     newLocation = new LatLng(lat, lng);
                     locationList.add(newLocation);
                     locationTimeList.add(locationSnapshot.getKey());
+                    updateMap();
                 }
             }
 
@@ -136,8 +141,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .setCancelable(false)
                         .create()
                         .show();
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
@@ -198,15 +201,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getLocationFromFirebase(View view) {
-        mMap.clear();
-        for (listID = 0; listID < locationList.size(); listID++) {
-            LatLng latLng = locationList.get(listID);
-            mMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .title("" + listID))
-                    .setTag(locationTimeList.get(listID));
-        }
-        Toast.makeText(this, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
+        updateMap();
     }
 
     @Override
@@ -229,22 +224,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     e.printStackTrace();
                     Toast.makeText(MapsActivity.this, "Deleting failed.", Toast.LENGTH_SHORT).show();
                 }
-
-
                 dialog.dismiss();
             }
         });
-
         adb.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-
         AlertDialog ad = adb.create();
         ad.show();
         return false;
+    }
+
+    public void updateMap() {
+        mMap.clear();
+        for (listID = 0; listID < locationList.size(); listID++) {
+            LatLng latLng = locationList.get(listID);
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("" + listID))
+                    .setTag(locationTimeList.get(listID));
+        }
+        Toast.makeText(this, "Map updated.", Toast.LENGTH_SHORT).show();
     }
 
     public void clearMap(View view) {

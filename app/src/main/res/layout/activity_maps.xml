@@ -78,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="getLocationFromFirebase"
-            android:text="@string/btn_get" />
+            android:text="@string/btn_update" />
 
         <Button
             android:id="@+id/btnUpload"
