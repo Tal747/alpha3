@@ -7,18 +7,25 @@
     tools:context=".MapsActivity"
     tools:title="Map">
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/linearBottom"
+        android:layout_below="@id/linearTop" />
+
     <LinearLayout
+        android:id="@+id/linearTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:background="#FFFFFF"
         android:gravity="center"
         android:onClick="switchToggle"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <LinearLayout
-            android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -31,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Center"
+                android:text="@string/center"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -42,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Center map to current location."
+                android:text="@string/center_description"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -52,48 +59,43 @@
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:checked="true"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:visibility="visible" />
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
+        android:id="@+id/linearBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/btnClear"
         android:layout_marginBottom="0dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_Get"
+            android:id="@+id/btnGet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="getLocationFromFirebase"
-            android:text="Get Location from Firebase" />
+            android:text="@string/btn_get" />
 
         <Button
-            android:id="@+id/btn_Upload"
+            android:id="@+id/btnUpload"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="uploadLocationToFirebase"
-            android:text="Upload Location to FireBase" />
+            android:text="@string/btn_upload" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnClear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:onClick="clearMap"
-        android:text="Clear map" />
+        android:text="@string/btn_clear" />
 
 </RelativeLayout>

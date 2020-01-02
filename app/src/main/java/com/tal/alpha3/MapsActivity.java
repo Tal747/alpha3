@@ -2,11 +2,11 @@ package com.tal.alpha3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener, CompoundButton.OnCheckedChangeListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener, CompoundButton.OnCheckedChangeListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private static final int requestCode = 101;
@@ -45,9 +46,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Location myLocation;
     LatLng newLocation;
     ArrayList<LatLng> locationList = new ArrayList<>();
+    ArrayList<Long> locationTimeList = new ArrayList<>();
     double lat, lng;
 
     Switch switch1;
+
+    AlertDialog.Builder adb;
+    String markerTag;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Location");
@@ -77,11 +82,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 locationList.clear();
+                locationTimeList.clear();
                 for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
                     lat = (double) locationSnapshot.child("latitude").getValue();
                     lng = (double) locationSnapshot.child("longitude").getValue();
                     newLocation = new LatLng(lat, lng);
                     locationList.add(newLocation);
+                    locationTimeList.add((Long) locationSnapshot.getValue());
                 }
             }
 
@@ -194,14 +201,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             LatLng latLng = locationList.get(i);
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title("" + i));
+                    .title("" + i))
+                    .setTag(locationTimeList.get(i));
         }
         Toast.makeText(this, "Added locations from Firebase to the map.", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        markerTag = marker.getTag().toString();
+
+        adb = new androidx.appcompat.app.AlertDialog.Builder(this);
+        adb.setTitle("Confirm deleting location from Firebase");
+        adb.setMessage("Please confirm deleting location from the database:");
+        adb.setCancelable(false);
+        adb.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                myRef = database.getReference("Location").child(markerTag);
+                myRef.removeValue();
+
+                Toast.makeText(MapsActivity.this, "Deleting succeeded.", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+            }
+        });
+
+        adb.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog ad = adb.create();
+        ad.show();
+        return false;
+    }
+
     public void clearMap(View view) {
         mMap.clear();
-        Toast.makeText(this, "Map cleared.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Map cleared.", Toast.LENGTH_SHORT).show();
     }
 
     @Override

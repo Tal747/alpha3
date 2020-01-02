@@ -61,7 +61,7 @@
             android:layout_weight="2"
             android:onClick="RegisterAccount"
             android:text="Register"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <Space
             android:layout_width="match_parent"

@@ -153,7 +153,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String str = stringList.get(position);
-                myRef = database.getReference("Alpha").child(str);
+                myRef = database.getReference("Text").child(str);
                 myRef.removeValue();
 
                 Toast.makeText(UpdateActivity.this, "Deleting succeeded.", Toast.LENGTH_SHORT).show();
